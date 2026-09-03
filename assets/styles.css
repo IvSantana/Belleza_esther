@@ -319,16 +319,17 @@ body.is-loading { overflow: hidden; height: 100vh; }
 .hero-blob-2 { width: 420px; height: 420px; bottom: -140px; left: -120px; background: radial-gradient(circle, var(--gold-300), transparent 70%); }
 
 .hero-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: var(--sp-16); align-items: center; }
+.hero-inner > * { min-width: 0; }
 .hero-title {
   font-size: var(--fs-hero);
   line-height: 0.98;
 }
 .hero-title .line { overflow: hidden; display: block; }
-.hero-title .line span { display: inline-block; transform: translateY(110%); }
+.hero-title .line span { display: block; width: 100%; transform: translateY(110%); }
 .hero-title em { font-style: italic; color: var(--accent-strong); }
 .hero-desc { max-width: 460px; margin-top: var(--sp-6); color: var(--text-secondary); font-size: 1.05rem; opacity: 0; }
 .hero-actions { display: flex; align-items: center; gap: var(--sp-6); margin-top: var(--sp-10); opacity: 0; }
-.hero-visual { position: relative; aspect-ratio: 3/4; opacity: 0; }
+.hero-visual { position: relative; width: 100%; aspect-ratio: 3/4; opacity: 0; }
 .hero-visual-frame {
   position: absolute; inset: 0;
   border-radius: var(--r-xl);
@@ -377,7 +378,8 @@ body.is-loading { overflow: hidden; height: 100vh; }
 
 /* =============== ABOUT =============== */
 .about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: var(--sp-20); align-items: center; }
-.about-visual { position: relative; aspect-ratio: 4/5; }
+.about-grid > * { min-width: 0; }
+.about-visual { position: relative; width: 100%; aspect-ratio: 4/5; }
 .about-visual-frame {
   position: absolute; inset: 0;
   border-radius: var(--r-lg);
@@ -499,6 +501,7 @@ body.is-loading { overflow: hidden; height: 100vh; }
 
 /* =============== LOCATION / CONTACT =============== */
 .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-16); align-items: stretch; }
+.location-grid > * { min-width: 0; }
 .location-info { display: flex; flex-direction: column; gap: var(--sp-8); }
 .info-row { display: flex; gap: var(--sp-4); align-items: flex-start; }
 .info-row svg { width: 22px; height: 22px; color: var(--accent-strong); flex-shrink: 0; margin-top: 2px; }
@@ -560,6 +563,50 @@ body.is-loading { overflow: hidden; height: 100vh; }
   .nav-links, .nav-cta .btn-ghost { display: none; }
   .nav-burger { display: flex; }
   .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* =============== SMALL PHONES (fine-tuning) =============== */
+@media (max-width: 480px) {
+  .container { padding: 0 var(--sp-4); }
+
+  /* Nav: logo + burger only, avoids the pill button wrapping/crowding it */
+  .nav-cta { display: none; }
+  .nav-logo { font-size: 1.25rem; }
+  .nav-burger { width: 40px; height: 40px; }
+
+  /* Hero: less top offset, tighter badge, scroll cue moves into normal flow */
+  .hero { padding-top: 96px; }
+  .hero-title { line-height: 1.04; }
+  .hero-actions { flex-wrap: wrap; gap: var(--sp-4); }
+  .hero-actions .btn { width: 100%; }
+  .hero-badge { top: -14px; right: 0; padding: var(--sp-2) var(--sp-4); font-size: var(--fs-caption); }
+  .hero-badge strong { font-size: 1rem; }
+  .hero-scroll { display: none; }
+
+  /* About: keep the stat card floating on the image, just tuck it fully inside the frame */
+  .about-stat-card { bottom: var(--sp-4); left: var(--sp-4); right: var(--sp-4); padding: var(--sp-4); justify-content: space-between; }
+  .stat-row { gap: var(--sp-6) var(--sp-8); }
+
+  /* Services: numbers/icons stay compact on very narrow screens */
+  .service-row { gap: var(--sp-4); padding: var(--sp-8) 0; }
+  .service-name { font-size: 1.3rem; gap: var(--sp-3); }
+  .service-icon { width: 26px; height: 26px; }
+
+  /* Gallery: shorter rows so tiles don't feel oversized on a narrow grid */
+  .gallery-grid { grid-auto-rows: 100px; gap: var(--sp-3); }
+
+  /* Testimonials: bigger tap target on the dots without changing their look */
+  .testi-dots button { box-sizing: content-box; padding: var(--sp-2); background-clip: content-box; }
+
+  /* Final CTA / footer: less vertical padding, tighter columns */
+  .final-cta { padding: var(--sp-16) var(--sp-4); margin: 0 var(--sp-4); }
+  .final-cta .cta-actions { flex-direction: column; align-items: stretch; }
+  .footer-cols { gap: var(--sp-8) var(--sp-10); }
+  .footer-top { flex-direction: column; gap: var(--sp-8); }
+
+  /* Floating UI: respect iOS safe area and free up thumb room */
+  .float-whatsapp { width: 50px; height: 50px; bottom: max(var(--sp-4), env(safe-area-inset-bottom)); right: var(--sp-4); }
+  .back-to-top { width: 40px; height: 40px; bottom: max(var(--sp-4), env(safe-area-inset-bottom)); left: var(--sp-4); }
 }
 
 /* =============== REDUCED MOTION =============== */
